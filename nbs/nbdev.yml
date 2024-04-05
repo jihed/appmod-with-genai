@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "appmod-with-genai"
+  site-url: "https://jihed.github.io/appmod-with-genai"
+  description: "Application Modernisation with Generative AI (AWS Bedrock, AWS SageMaker Jumpstart)"
+  repo-branch: main
+  repo-url: "https://github.com/jihed/appmod-with-genai"
