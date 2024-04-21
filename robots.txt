@@ -1,0 +1,1 @@
+Sitemap: https://jihed.github.io/appmod-with-genai/sitemap.xml
