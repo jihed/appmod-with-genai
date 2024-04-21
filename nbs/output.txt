@@ -1,0 +1,40 @@
+ Sure, I can help you outline a migration plan from Java Enterprise Edition (EE) to Quarkus for your Message Driven Bean (MDB). Here's a high-level plan:
+
+1. **Understand the Current Application**: Before starting the migration, it's important to understand the current application's architecture, dependencies, and functionality. In this case, it's a simple MDB that listens to a JMS topic and processes messages.
+
+2. **Quarkus Setup**: Set up a new Quarkus project. You can do this using the Quarkus Maven or Gradle plugin, or by using the Quarkus CLI.
+
+3. **Replace JMS with Quarkus Messaging**: Quarkus uses SmallRye Messaging, which is a reactive messaging framework. You can use it to replace the JMS functionality in your MDB. The `@Incoming` annotation can be used to denote a method that processes incoming messages, similar to the `onMessage` method in your MDB.
+
+4. **Replace EJB with Quarkus Components**: Quarkus does not use EJBs. Instead, it uses plain old Java objects (POJOs) and annotations to define components. You can replace the `@MessageDriven` annotation with appropriate Quarkus annotations.
+
+5. **Logging**: Quarkus uses Unified Logging, which is based on Eclipse MicroProfile JLT. You can replace the `java.util.logging.Logger` with `org.jboss.logging.Logger` or `io.quarkus.logging.Log`.
+
+6. **Testing**: Write tests for your migrated code to ensure that it works as expected. Quarkus provides testing frameworks that you can use for this.
+
+7. **Deployment**: Once you've migrated your code and written tests, you can deploy your application. Quarkus supports various deployment options, including native executables, container images, and JAR files.
+
+Here's a rough example of how your code might look after migration:
+
+```java
+package org.jboss.as.quickstarts.mdb;
+
+import io.quarkus.logging.Log;
+import io.smallrye.reactive.messaging.annotations.Blocking;
+import io.smallrye.reactive.messaging.annotations.Incoming;
+import jakarta.jms.JMSException;
+import jakarta.jms.TextMessage;
+
+public class HelloWorldTopicMDB {
+
+    @Blocking
+    @Incoming("topic/HELLOWORLDMDBTopic")
+    public void onMessage(TextMessage rcvMessage) {
+        try {
+            Log.info("Received Message from topic: " + rcvMessage.getText());
+        } catch (JMSException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
